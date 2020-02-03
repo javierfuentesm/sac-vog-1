@@ -21,6 +21,7 @@ restService.post("/echo", function(req, res) {
   */
 
   respuesta = "Que onda, que pex";
+  console.log(respuesta);
   return res.json({
       fulfillmentText: respuesta,
       source: "webhook-echo-sample"
