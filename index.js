@@ -1,17 +1,24 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
+"use strict";
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.post('/clima', function (req, res) {
-  res.json({fulfillmentText: 'Respondientdo desde webhook en node'});
+
+app.post('/sacvog', function (req, res) {
+  res.json({
+    fulfillmentText: 'Respondientdo desde webhook en node',
+    source: "webhook-echo-sample"
+  });
 });
 
-app.listen(3000, function () {
-  console.log('App escuchando puerto 3000');
+app.listen(process.env.PORT || 8000, function() {
+  console.log("Server up and listening in port 8000");
 });
+
+
 
 
 
