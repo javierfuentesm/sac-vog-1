@@ -9,19 +9,11 @@ restService.use(
   })
 );
 restService.use(bodyParser.json());
+
 // Funcion que se llama desde DialogFlow
 restService.post("/echo", function(req, res) {
-  /*
-  var Variable1 =
-    req.body.queryResult &&
-    req.body.queryResult.parameters &&
-    req.body.queryResult.parameters.Sensores
-      ? req.body.queryResult.parameters.Sensores
-      : "vacio";
-  */
-
+  console.log("[OK] Se recibio una peticion Post");
   respuesta = "Que onda, que pex";
-  console.log(respuesta);
   return res.json({
       fulfillmentText: respuesta,
       source: "webhook-echo-sample"
@@ -30,7 +22,7 @@ restService.post("/echo", function(req, res) {
 });
 
 restService.listen(process.env.PORT || 8000, function() {
-  console.log("Server up and listening");
+  console.log("Server up and listening in port 8000");
 });
 
 
