@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 app.post('/sacvog', function (req, res) {
   res.json({
-    fulfillmentText: 'Respondientdo desde webhook en node',
+    fulfillmentText: 'Hola que hace?',
     source: "webhook-echo-sample"
   });
 });
