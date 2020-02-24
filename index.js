@@ -19,7 +19,6 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
 
 app.post('/sacvog', function (req, res) {
   res.json({
