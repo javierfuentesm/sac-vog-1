@@ -65,7 +65,7 @@ app.post('/sacvog', function (req, res) {
 
 
   res.json({
-    fulfillmentText: 'No entro a ninguna variable'+req.body.queryResult.parameters,
+    fulfillmentText: 'No entro a ninguna variable'+req.body.queryResult.parameters.deptos,
     source: "webhook-echo-sample"
   });
   
