@@ -39,7 +39,7 @@ app.post('/sacvog', function (req, res) {
       ? req.body.queryResult.parameters.deptos
       : "vacio";
   
-  if ( deptos!="vacio" ) {
+  if ( deptos.toString().trim() !== 'vacio' ) {
     //Necesita saber que departamentos hay
     fetchAllDeptos(function(result){
       if (result!=null) {
@@ -65,7 +65,7 @@ app.post('/sacvog', function (req, res) {
 
 
   res.json({
-    fulfillmentText: 'No entro a ninguna variable',
+    fulfillmentText: 'No entro a ninguna variable'+req.body.queryResult.parameters,
     source: "webhook-echo-sample"
   });
   
