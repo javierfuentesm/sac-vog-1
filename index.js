@@ -19,12 +19,56 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+const databaseRef = firebase.database().ref();
+const departamentosRef = databaseRef.child('departamentos');
+const tramitesRef = databaseRef.child('tramites');
+
+function fetchAllDeptos(result) {
+	departamentosRef.on('value', function(snapshot) {
+	  result(snapshot.val());
+	});
+}
+
 
 app.post('/sacvog', function (req, res) {
+
+  let deptos =
+    req.body.queryResult &&
+    req.body.queryResult.parameters &&
+    req.body.queryResult.parameters.deptos
+      ? req.body.queryResult.parameters.deptos
+      : "vacio";
+  
+  if ( deptos!="vacio" ) {
+    //Necesita saber que departamentos hay
+    fetchAllDeptos(function(result){
+      if (result!=null) {
+        let array = Object.values(result);
+        let respuesta = '';
+        for(let i=0;i<array.length;i++){
+          
+          if(i==(array.length-1)){
+            respuesta+="y "+array[i].name;
+          }else{
+            respuesta+=array[i].name+', ';
+          }
+        }
+        console.log(respuesta);
+        //Teniendo la respuesta, solo respondemos
+        res.json({
+          fulfillmentText: 'Los departamentos que hay en la institucion son: '+respuesta,
+          source: "webhook-echo-sample"
+        });
+      }
+    });
+  }
+
+
   res.json({
-    fulfillmentText: 'Hola que hace?',
+    fulfillmentText: 'No entro a ninguna variable',
     source: "webhook-echo-sample"
   });
+  
 });
 
 app.listen(process.env.PORT || 8000, function() {
