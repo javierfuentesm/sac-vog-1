@@ -33,7 +33,7 @@ function fetchAllDeptos(result) {
 app.post('/sacvog', function (req, res) {
 
   let deptos = req.body.queryResult.parameters.deptos;
-  
+
   if ( deptos === 'departamentos' ) {
     //Necesita saber que departamentos hay
     fetchAllDeptos(function(result){
@@ -56,13 +56,12 @@ app.post('/sacvog', function (req, res) {
         });
       }
     });
+  }else{
+    res.json({
+      fulfillmentText: 'No entro a ninguna variable',
+      source: "webhook-echo-sample"
+    });
   }
-
-  res.json({
-    fulfillmentText: 'No entro a ninguna variable',
-    source: "webhook-echo-sample"
-  });
-  
 });
 
 app.listen(process.env.PORT || 8000, function() {
