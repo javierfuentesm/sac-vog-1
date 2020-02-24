@@ -32,14 +32,9 @@ function fetchAllDeptos(result) {
 
 app.post('/sacvog', function (req, res) {
 
-  let deptos =
-    req.body.queryResult &&
-    req.body.queryResult.parameters &&
-    req.body.queryResult.parameters.deptos
-      ? req.body.queryResult.parameters.deptos
-      : "vacio";
+  let deptos = req.body.queryResult.parameters.deptos;
   
-  if ( deptos.toString().trim() === 'departamentos' ) {
+  if ( deptos === 'departamentos' ) {
     //Necesita saber que departamentos hay
     fetchAllDeptos(function(result){
       if (result!=null) {
@@ -62,7 +57,6 @@ app.post('/sacvog', function (req, res) {
       }
     });
   }
-
 
   res.json({
     fulfillmentText: 'No entro a ninguna variable',
