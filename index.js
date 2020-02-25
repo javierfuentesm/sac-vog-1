@@ -66,13 +66,13 @@ function fetchTramitesByIdDepto(idDepto, resultado) {
 
 app.post('/sacvog', function (req, res) {
 
-  //let deptos = req.body.queryResult.parameters.deptos;    //Que departamentos hay
-  //let tramite = req.body.queryResult.parameters.Tramite;  //Que tramites hay
-  //let deptoTramite = req.body.queryResult.parameters.Depto;
+  let deptos = req.body.queryResult.parameters.deptos || 'vacio';
+  let tramite = req.body.queryResult.parameters.tram || 'vacio';
+  let deptoTramite = req.body.queryResult.parameters.depto || 'vacio';
 
-  let deptos = req.headers.deptos || 'vacio';
-  let tram = req.headers.tram || 'vacio';
-  let deptoTramite = req.headers.depto || 'vacio';
+  //let deptos = req.headers.deptos || 'vacio';
+  //let tram = req.headers.tram || 'vacio';
+  //let deptoTramite = req.headers.depto || 'vacio';
   
   if ( deptos !== 'vacio' ) {
     //Necesita saber que departamentos hay
