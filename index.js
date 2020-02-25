@@ -67,7 +67,7 @@ function fetchTramitesByIdDepto(idDepto, resultado) {
 app.post('/sacvog', function (req, res) {
 
   let deptos = req.body.queryResult.parameters.deptos || 'vacio';
-  let tramite = req.body.queryResult.parameters.tram || 'vacio';
+  let tram = req.body.queryResult.parameters.tram || 'vacio';
   let deptoTramite = req.body.queryResult.parameters.depto || 'vacio';
 
   //let deptos = req.headers.deptos || 'vacio';
