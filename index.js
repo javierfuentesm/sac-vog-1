@@ -29,19 +29,58 @@ function fetchAllDeptos(result) {
 	});
 }
 
+function fetchAllTramites(result) {
+	tramitesRef.on('value', function(snapshot) {
+	  result(snapshot.val());
+	});
+}
+
+function fetchIdDeptoByName(name,resultado) {
+	fetchAllDeptos(function(result){
+    let array = Object.values(result);
+    let arrayKeys = Object.keys(result);
+    let posicion = 0;
+    array.forEach(function (element, index) {
+      let nombre = sinDiacriticos(element.name).toLowerCase().trim().replace(/ /g, "");
+      let nombreInput = sinDiacriticos(name).toLowerCase().trim().replace(/ /g, "");
+      if(nombre==nombreInput){
+        posicion = index;
+      }
+    });
+    resultado(arrayKeys[posicion]);
+  });
+}
+
+function fetchTramitesByIdDepto(idDepto, resultado) {
+  fetchAllTramites(function(result){
+    let array = Object.values(result);
+    let respuesta = '';
+    array.forEach(function (element) {
+      if(element.departamento == idDepto){
+        respuesta+=element.name+', ';
+      }
+    });
+    resultado(respuesta);
+  });
+}
 
 app.post('/sacvog', function (req, res) {
 
-  let deptos = req.body.queryResult.parameters.deptos;
+  //let deptos = req.body.queryResult.parameters.deptos;    //Que departamentos hay
+  //let tramite = req.body.queryResult.parameters.Tramite;  //Que tramites hay
+  //let deptoTramite = req.body.queryResult.parameters.Depto;
 
-  if ( deptos === 'departamentos' ) {
+  let deptos = req.headers.deptos || 'vacio';
+  let tram = req.headers.tram || 'vacio';
+  let deptoTramite = req.headers.depto || 'vacio';
+  
+  if ( deptos !== 'vacio' ) {
     //Necesita saber que departamentos hay
     fetchAllDeptos(function(result){
       if (result!=null) {
         let array = Object.values(result);
         let respuesta = '';
         for(let i=0;i<array.length;i++){
-          
           if(i==(array.length-1)){
             respuesta+="y "+array[i].name;
           }else{
@@ -49,12 +88,21 @@ app.post('/sacvog', function (req, res) {
           }
         }
         console.log(respuesta);
-        //Teniendo la respuesta, solo respondemos
         res.json({
-          fulfillmentText: 'Los departamentos que hay en la institucion son: '+respuesta,
+          fulfillmentText: 'Los departamentos que hay en la institución son: '+respuesta,
           source: "webhook-echo-sample"
         });
       }
+    });
+  }else if ( tram !== 'vacio' ){
+    //Pide saber que tramites hay en un x DEPTO
+    fetchIdDeptoByName(deptoTramite, function(result){
+      fetchTramitesByIdDepto(result, function(resultado){
+        res.json({
+          fulfillmentText: 'Los trámites que emite: ' + deptoTramite + ' son: '+resultado,
+          source: "webhook-echo-sample"
+        });
+      });
     });
   }else{
     res.json({
@@ -68,8 +116,9 @@ app.listen(process.env.PORT || 8000, function() {
   console.log("Server up and listening in port 8000");
 });
 
-
-
-
-
-
+function sinDiacriticos(texto) {
+  return texto
+         .normalize('NFD')
+         .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+         .normalize();
+}
