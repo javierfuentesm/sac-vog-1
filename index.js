@@ -60,7 +60,7 @@ function fetchTramitesByIdDepto(idDepto, resultado) {
         respuesta+=element.name+', ';
       }
     });
-    resultado(respuesta.slice(0,-1));
+    resultado(respuesta.substr(0, respuesta.length-1));
   });
 }
 
