@@ -83,21 +83,21 @@ function fetchFullTramitesByIdDepto(idDepto, resultado) {
 
 app.post('/sacvog', function (req, res) {
 
-  //let deptos = req.body.queryResult.parameters.deptos || 'vacio';       //Pide lista de deptos
-  //let tram = req.body.queryResult.parameters.tram || 'vacio';           //Pide lista de de tramites 
-  //let deptoTramite = req.body.queryResult.parameters.depto || 'vacio';  //De acuerdo a este depto.
+  let deptos = req.body.queryResult.parameters.deptos || 'vacio';       //Pide lista de deptos
+  let tram = req.body.queryResult.parameters.tram || 'vacio';           //Pide lista de de tramites 
+  let deptoTramite = req.body.queryResult.parameters.depto || 'vacio';  //De acuerdo a este depto.
 
   //Valores para solicitar una constancia con su tipo
-  //let dep = req.body.queryResult.parameters.depto || 'vacio';         //departamento
-  //let doc = req.body.queryResult.parameters.documento || 'vacio';     //documento que necesita
+  let dep = req.body.queryResult.parameters.depto || 'vacio';         //departamento
+  let doc = req.body.queryResult.parameters.documento || 'vacio';     //documento que necesita
 
 
-  let deptos = req.headers.deptos || 'vacio';
-  let tram = req.headers.tram || 'vacio';
-  let deptoTramite = req.headers.depto || 'vacio';
+  //let deptos = req.headers.deptos || 'vacio';
+  //let tram = req.headers.tram || 'vacio';
+  //let deptoTramite = req.headers.depto || 'vacio';
   
-  let dep = req.headers.depto || 'vacio';
-  let doc = req.headers.documento || 'vacio';
+  //let dep = req.headers.depto || 'vacio';
+  //let doc = req.headers.documento || 'vacio';
   
   if ( deptos !== 'vacio' ) {
     //Necesita saber que departamentos hay
