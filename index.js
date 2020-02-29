@@ -60,15 +60,21 @@ function fetchTramitesByIdDepto(idDepto, resultado) {
         respuesta+=element.name+', ';
       }
     });
-    resultado(respuesta);
+    resultado(respuesta.slice(0,-1));
   });
 }
 
+
 app.post('/sacvog', function (req, res) {
 
-  let deptos = req.body.queryResult.parameters.deptos || 'vacio';
-  let tram = req.body.queryResult.parameters.tram || 'vacio';
-  let deptoTramite = req.body.queryResult.parameters.depto || 'vacio';
+  let deptos = req.body.queryResult.parameters.deptos || 'vacio';       //Pide lista de deptos
+  let tram = req.body.queryResult.parameters.tram || 'vacio';           //Pide lista de de tramites 
+  let deptoTramite = req.body.queryResult.parameters.depto || 'vacio';  //De acuerdo a este depto.
+
+  //Valores para solicitar una constancia con su tipo
+  let dep = req.body.queryResult.parameters.depto || 'vacio';         //departamento
+  let doc = req.body.queryResult.parameters.documento || 'vacio';     //documento que necesita
+
 
   //let deptos = req.headers.deptos || 'vacio';
   //let tram = req.headers.tram || 'vacio';
@@ -104,9 +110,25 @@ app.post('/sacvog', function (req, res) {
         });
       });
     });
+  }else if( doc !== 'vacio' ){
+    //ESTA PIDIENDO UN TRAMITE
+    fetchIdDeptoByName(dep, function(result){
+      fetchTramitesByIdDepto(result, function(resultado){
+        if(resultado.includes(doc)){
+          //El documento si pertenece al depto que pidio o parte del nombre
+          //hacemos split de los tramites
+
+        }else{
+          res.json({
+            fulfillmentText: 'Lo siento, el departamento de: '+dep+' solo emite los siguientes trámites: ' +resultado,
+            source: "webhook-echo-sample"
+          });
+        }
+      });
+    });
   }else{
     res.json({
-      fulfillmentText: 'No entro a ninguna variable',
+      fulfillmentText: 'Lo siento, no entendí lo que solicitaste, ¿Podrías repetirlo?',
       source: "webhook-echo-sample"
     });
   }
