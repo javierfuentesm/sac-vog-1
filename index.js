@@ -60,7 +60,8 @@ function fetchTramitesByIdDepto(idDepto, resultado) {
         respuesta+=element.name+', ';
       }
     });
-    resultado(respuesta.substr(0, respuesta.length-1));
+    respuesta = respuesta.substr(0, respuesta.length-1)
+    resultado(respuesta);
   });
 }
 
@@ -117,6 +118,10 @@ app.post('/sacvog', function (req, res) {
         if(resultado.includes(doc)){
           //El documento si pertenece al depto que pidio o parte del nombre
           //hacemos split de los tramites
+          var arrayTramites = resultado.split(',');
+          arrayTramites.forEach(function (element, index) {
+
+          });
 
         }else{
           res.json({
