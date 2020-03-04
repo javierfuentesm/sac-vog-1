@@ -80,6 +80,23 @@ function fetchFullTramitesByIdDepto(idDepto, resultado) {
   });
 }
 
+function fetchFullTramiteById(idTramite, resultado){
+  fetchAllTramites(function(result){
+    let arrayKeys = Object.keys(result);
+    let arrayFull = Object.values(result);
+    let arrayResult = [{}];
+    let tramite = {};
+    arrayFull.forEach(function (element, index) {
+      arrayFull[index].id = arrayKeys[index];
+      arrayResult = arrayFull;
+      if(arrayResult[i].id == idTramite){
+        tramite = arrayResult[i];
+      }
+    });
+    resultado(tramite);
+  });
+}
+
 
 app.post('/sacvog', function (req, res) {
 
@@ -132,7 +149,6 @@ app.post('/sacvog', function (req, res) {
     //ESTA PIDIENDO UN TRAMITE
     fetchIdDeptoByName(dep, function(result){
       fetchFullTramitesByIdDepto(result, function(resultadoFull){
-
         //Recorremos el array para ver si existe el tramite
         let ok = false;
         let posiblesDocs = "";
@@ -204,12 +220,16 @@ app.post('/sacvog', function (req, res) {
     });
   }else if(si !== 'vacio'){
     //Si quiere datos extras
-    res.json({
-      fulfillmentText: 'Enlistando datos extras',
-      source: "webhook-echo-sample"
+    let doc = req.body.queryResult.outputContexts[0].parameters.doc;
+    let depto = req.body.queryResult.outputContexts[0].parameters.depto;
+    fetchFullTramiteById(doc, function(tramite){
+      res.json({
+        fulfillmentText: 'Enlistando datos extras',
+        docu: doc,
+        depato: depto,
+        source: "webhook-echo-sample"
+      });
     });
-
-
   }else{
     res.json({
       fulfillmentText: 'Lo siento, no entendí lo que solicitaste, ¿Podrías repetirlo?',
