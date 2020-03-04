@@ -276,6 +276,7 @@ app.post('/sacvog', function (req, res) {
     }else if(yesOrNot.includes('todos')){
       //Quiere todos los datos
       fetchFullTramiteById(doc, function(tramite){
+        var extras = {};
         for(var i in tramite.extras){
           extras[tramite.extras[i].clave] = true;
         }
