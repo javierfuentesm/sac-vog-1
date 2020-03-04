@@ -150,6 +150,11 @@ app.post('/sacvog', function (req, res) {
               res.json({
 		"fulfillmentText": "Espere por favor, su trámite se esta generando...",
                 "source": "webhook-echo-sample",
+		"outputContexts": [
+                	"parameters": {
+		        	"param": "param value"
+			}
+                ]
               });
             }else{
               posiblesDocs+=element.name+" ,";
