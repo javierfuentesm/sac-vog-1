@@ -225,13 +225,10 @@ app.post('/sacvog', function (req, res) {
     fetchFullTramiteById(doc, function(tramite){
       var extrasString = "";
       var extras = {};
-      for(var i in tramite.extras){
-        extrasString+=tramite.extras[i].name+", ";
-        extras[element.extras[i].clave] = false;
-      }
       res.json({
         fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+' ¿Cúales desea agregar?',
         extras: extras,
+        tram: tramite,
         source: "webhook-echo-sample"
       });
     });
