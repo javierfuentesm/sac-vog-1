@@ -219,7 +219,7 @@ app.post('/sacvog', function (req, res) {
         }
       });
     });
-  }else if(si !== 'vacio'){
+  }else if(si !== 'vacio' && dataExtra === 'vacio'){
     //Si quiere datos extras
     let posicionContexto = 0;
     req.body.queryResult.outputContexts.forEach(function (element, index) {
