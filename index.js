@@ -177,10 +177,11 @@ app.post('/sacvog', function (req, res) {
                       name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
                       lifespanCount: 5,
                       parameters: {
-                          doc:  element.id,
-                          depto: element.departamento,
-                          extras: extras
-                        }
+                        doc:  element.id,
+                        depto: element.departamento,
+                        extras: extras
+                      },
+                      finish: false
                     }]
                 });
               }else{
@@ -192,9 +193,10 @@ app.post('/sacvog', function (req, res) {
                       name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
                       lifespanCount: 10,
                       parameters: {
-                          doc:  element.id,
-                          depto: element.departamento,
-                        }
+                        doc:  element.id,
+                        depto: element.departamento,
+                      },
+                      finish: true
                     }]
                 });
               }
@@ -229,7 +231,7 @@ app.post('/sacvog', function (req, res) {
     let doc = req.body.queryResult.outputContexts[posicionContexto].parameters.doc;
     let depto = req.body.queryResult.outputContexts[posicionContexto].parameters.depto;
     var extrasLine = req.body.queryResult.outputContexts[posicionContexto].parameters.extras;
-    if(yesOrNot.includes('si')){
+    if(yesOrNot.includes('sí')){
       //Dijo que SI
       fetchFullTramiteById(doc, function(tramite){
         var extrasString = "";
@@ -240,7 +242,18 @@ app.post('/sacvog', function (req, res) {
         }
         res.json({
           fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+'¿Desea agregar alguno?',
-          source: "webhook-echo-sample"
+          source: "webhook-echo-sample",
+          outputContexts: 
+          [{
+            name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
+            lifespanCount: 10,
+            parameters: {
+                doc:  doc,
+                depto:  depto,
+            },
+            extras: extrasLine,
+            finish: false
+          }]
         });
       });
     }else{
