@@ -306,7 +306,18 @@ app.post('/sacvog', function (req, res) {
       if(exist == false){
         res.json({
           fulfillmentText: 'Ese dato extra no lo puede contener el tramite, los datos extras que puede contener son: '+extrasString+'¿Desea agregar alguno?',
-          source: "webhook-echo-sample"
+          source: "webhook-echo-sample",
+          outputContexts: 
+            [{
+              name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
+              lifespanCount: 10,
+              parameters: {
+                doc:  doc,
+                depto:  depto,
+                extras: nuevosExtras,
+                finish: false
+              }
+            }]
         });
       }else{
         //Si existio su tramite y se agrego al json
@@ -321,7 +332,8 @@ app.post('/sacvog', function (req, res) {
                 parameters: {
                   doc:  doc,
                   depto:  depto,
-                  extras: nuevosExtras
+                  extras: nuevosExtras,
+                  finish: false
                 }
               }]
           });
@@ -336,7 +348,8 @@ app.post('/sacvog', function (req, res) {
                 parameters: {
                   doc:  doc,
                   depto:  depto,
-                  extras: nuevosExtras
+                  extras: nuevosExtras,
+                  finish: false
                 }
               }]
           });
