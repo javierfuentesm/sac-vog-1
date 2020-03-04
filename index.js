@@ -151,7 +151,18 @@ app.post('/sacvog', function (req, res) {
                 fulfillmentText: 'Espere por favor, su trámite se esta generando...',
                 doc: element.id,
                 depto: element.departamento,
-                source: "webhook-echo-sample"
+                source: "webhook-echo-sample",
+		outputContexts: [  
+		    {  
+		      "name":"Irving",
+		      "lifespanCount":5,
+		      "parameters":{  
+			"depto": element.departamento,
+			"doc": element.departamento
+		      }
+		    }
+		  ],
+		followupEventInput: {  }
               });
             }else{
               posiblesDocs+=element.name+" ,";
