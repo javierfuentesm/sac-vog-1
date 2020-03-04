@@ -175,7 +175,7 @@ app.post('/sacvog', function (req, res) {
                   outputContexts: 
                     [{
                       name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
-                      lifespanCount: 10,
+                      lifespanCount: 5,
                       parameters: {
                           doc:  element.id,
                           depto: element.departamento,
@@ -190,7 +190,7 @@ app.post('/sacvog', function (req, res) {
                   outputContexts: 
                     [{
                       name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
-                      lifespanCount: 5,
+                      lifespanCount: 10,
                       parameters: {
                           doc:  element.id,
                           depto: element.departamento,
@@ -222,11 +222,9 @@ app.post('/sacvog', function (req, res) {
   }else if(si !== 'vacio' && dataExtra === 'vacio'){
     //Si quiere datos extras
     let posicionContexto = 0;
-    var sessionNumber;
     req.body.queryResult.outputContexts.forEach(function (element, index) {
       if(element.name.includes('pdf')){
         posicionContexto = index;
-        sessionNumber = getFromBetween.get(element.name,"sessions/","/contexts");
       }
     });
     let doc = req.body.queryResult.outputContexts[posicionContexto].parameters.doc;
@@ -278,13 +276,13 @@ app.post('/sacvog', function (req, res) {
           source: "webhook-echo-sample"
         });
       }else{
-        //Si existio su tramite y se agrego al json        
+        //Si existio su tramite y se agrego al json
         res.json({
           fulfillmentText: 'El dato se agrego con exito, quedan los siguientes datos extras: '+extrasString+'¿Desea agregar alguno?',
           source: "webhook-echo-sample",
           outputContexts: 
             [{
-              name: "projects/sac-vog-cecebh/agent/"+sessionNumber+"/123456/contexts/pdf",
+              name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
               lifespanCount: 10,
               parameters: {
                   extras: nuevosExtras
