@@ -258,11 +258,15 @@ app.post('/sacvog', function (req, res) {
     fetchFullTramiteById(doc, function(tramite){
       for(var i in tramite.extras){
         if(sinDiacriticos(tramite.extras[i].name).toLowerCase().includes(sinDiacriticos(dataExtra).toLowerCase())){
+          //El dato que dijo si existe en el documento
           exist = true;
           //Lo pasamos a true, y lo quitamos de los datos extra que puede contener
           nuevosExtras[tramite.extras[i].clave] = true;
         }else{
-          extrasString+=tramite.extras[i].name+", ";
+          //Seguiremos listando el dato mientras no este ya en true
+          if(extrasLine[tramite.extras[i].clave] == false){
+            extrasString+=tramite.extras[i].name+", ";
+          }
           nuevosExtras[tramite.extras[i].clave] = extrasLine[tramite.extras[i].clave];
         }
       }
