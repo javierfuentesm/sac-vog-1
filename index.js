@@ -230,7 +230,7 @@ app.post('/sacvog', function (req, res) {
         extras[tramite.extras[i].clave] = false;
       }
       res.json({
-        fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+' ¿Cúales desea agregar?',
+        fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+'¿Cúales desea agregar?',
         extras: extras,
         source: "webhook-echo-sample"
       });
