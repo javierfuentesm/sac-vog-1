@@ -90,8 +90,8 @@ app.post('/sacvog', function (req, res) {
   //Valores para solicitar una constancia con su tipo
   let dep = req.body.queryResult.parameters.depto || 'vacio';         //departamento
   let doc = req.body.queryResult.parameters.documento || 'vacio';     //documento que necesita
-
-
+  let si = req.body.queryResult.queryText || 'vacio';                 //Responde si al hecho de datos extras
+  
   //let deptos = req.headers.deptos || 'vacio';
   //let tram = req.headers.tram || 'vacio';
   //let deptoTramite = req.headers.depto || 'vacio';
@@ -202,6 +202,14 @@ app.post('/sacvog', function (req, res) {
         }
       });
     });
+  }else if(si !== 'vacio'){
+    //Si quiere datos extras
+    res.json({
+      fulfillmentText: 'Enlistando datos extras',
+      source: "webhook-echo-sample"
+    });
+
+
   }else{
     res.json({
       fulfillmentText: 'Lo siento, no entendí lo que solicitaste, ¿Podrías repetirlo?',
