@@ -254,14 +254,16 @@ app.post('/sacvog', function (req, res) {
     var extrasLine = req.body.queryResult.outputContexts[posicionContexto].parameters.extras; //Los extras actuales
     let exist = false;
     var extrasString = "";
+    var nuevosExtras = {};
     fetchFullTramiteById(doc, function(tramite){
       for(var i in tramite.extras){
         if(sinDiacriticos(tramite.extras[i].name).toLowerCase().includes(sinDiacriticos(dataExtra).toLowerCase())){
           exist = true;
           //Lo pasamos a true, y lo quitamos de los datos extra que puede contener
-          extrasLine[tramite.extras[i].clave] = true;
+          nuevosExtras[tramite.extras[i].clave] = true;
         }else{
           extrasString+=tramite.extras[i].name+", ";
+          nuevosExtras[tramite.extras[i].clave] = extrasLine[tramite.extras[i].clave];
         }
       }
       if(exist == false){
@@ -273,7 +275,7 @@ app.post('/sacvog', function (req, res) {
         //Si existio su tramite y se agrego al json
         res.json({
           fulfillmentText: 'El dato se agrego con exito, quedan los siguientes datos extras: '+extrasString+'¿Desea agregar alguno?',
-          extras: extrasLine,
+          extras: nuevosExtras,
           source: "webhook-echo-sample"
         });
       }
