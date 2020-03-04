@@ -166,7 +166,7 @@ app.post('/sacvog', function (req, res) {
                 //Si tiene datos extras, crearemos un json con ellos
                 var extras = {};
                 for(var i in element.extras){
-                  extras[element.extras [i].name] = false;
+                  extras[element.extras[i].clave] = false;
                 }
                 res.json({
                   fulfillmentText: "Esté documento puede contener datos extras, ¿quiere escucharlos?",
@@ -223,10 +223,15 @@ app.post('/sacvog', function (req, res) {
     let doc = req.body.queryResult.outputContexts[0].parameters.doc;
     let depto = req.body.queryResult.outputContexts[0].parameters.depto;
     fetchFullTramiteById(doc, function(tramite){
+      var extrasString = "";
+      var extras = {};
+      for(var i in tramite.extras){
+        extrasString+=tramite.extras[i].name+", ";
+        extras[element.extras[i].clave] = false;
+      }
       res.json({
-        fulfillmentText: 'Enlistando datos extras',
-        doc: doc,
-        depto: depto,
+        fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+' ¿Cúales desea agregar?',
+        extras: extras,
         source: "webhook-echo-sample"
       });
     });
