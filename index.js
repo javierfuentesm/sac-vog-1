@@ -148,20 +148,26 @@ app.post('/sacvog', function (req, res) {
               //el tramite es exacto
               exacto = true;
               res.json({
-                fulfillmentText: 'Espere por favor, su trámite se esta generando...',
-                doc: element.id,
-                depto: element.departamento,
-                source: "webhook-echo-sample",
-		outputContexts: [  
+                {  
+		  "fulfillmentText":"Espere por favor, su trámite se esta generando...",
+		  "fulfillmentMessages":[  ],
+		  "source":"example.com",
+		  "payload":{  
+		    "google":{  },
+		    "facebook":{  },
+		    "slack":{  }
+		  },
+		  "outputContexts":[  
 		    {  
-		      name:'Irving',
-		      lifespanCount:5,
-		      parameters:{  
-			depto: element.departamento,
-			doc: element.departamento
+		      "name":"<Context Name>",
+		      "lifespanCount":5,
+		      "parameters":{  
+			"<param name>":"<param value>"
 		      }
 		    }
-		  ]
+		  ],
+		  "followupEventInput":{  }
+		}
               });
             }else{
               posiblesDocs+=element.name+" ,";
