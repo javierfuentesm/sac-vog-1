@@ -179,9 +179,9 @@ app.post('/sacvog', function (req, res) {
                       parameters: {
                         doc:  element.id,
                         depto: element.departamento,
-                        extras: extras
-                      },
-                      finish: false
+                        extras: extras,
+                        finish: false
+                      }                      
                     }]
                 });
               }else{
@@ -195,8 +195,8 @@ app.post('/sacvog', function (req, res) {
                       parameters: {
                         doc:  element.id,
                         depto: element.departamento,
+                        finish: true
                       },
-                      finish: true
                     }]
                 });
               }
@@ -248,11 +248,11 @@ app.post('/sacvog', function (req, res) {
             name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
             lifespanCount: 10,
             parameters: {
-                doc:  doc,
-                depto:  depto,
-            },
-            extras: extrasLine,
-            finish: false
+              doc:  doc,
+              depto:  depto,
+              extras: extrasLine,
+              finish: false
+            }
           }]
         });
       });
@@ -268,9 +268,9 @@ app.post('/sacvog', function (req, res) {
             parameters: {
                 doc:  doc,
                 depto:  depto,
-            },
-            extras: extrasLine,
-            finish: true
+                extras: extrasLine,
+                finish: true
+            }
           }]
       });
     }
@@ -319,8 +319,10 @@ app.post('/sacvog', function (req, res) {
                 name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
                 lifespanCount: 10,
                 parameters: {
-                    extras: nuevosExtras
-                  }
+                  doc:  doc,
+                  depto:  depto,
+                  extras: nuevosExtras
+                }
               }]
           });
         }else{
@@ -332,8 +334,10 @@ app.post('/sacvog', function (req, res) {
                 name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
                 lifespanCount: 10,
                 parameters: {
-                    extras: nuevosExtras
-                  }
+                  doc:  doc,
+                  depto:  depto,
+                  extras: nuevosExtras
+                }
               }]
           });
         }
