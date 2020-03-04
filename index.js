@@ -105,7 +105,7 @@ app.post('/sacvog', function (req, res) {
   //Valores para solicitar una constancia con su tipo
   let dep = req.body.queryResult.parameters.depto || 'vacio';         //departamento
   let doc = req.body.queryResult.parameters.documento || 'vacio';     //documento que necesita
-  let si = req.body.queryResult.queryText || 'vacio';                 //Responde si al hecho de datos extras
+  let yesOrNot = req.body.queryResult.queryText || 'vacio';                 //Responde si al hecho de datos extras
   let dataExtra = req.body.queryResult.parameters.datosextras || 'vacio';
   
   //let deptos = req.headers.deptos || 'vacio';
@@ -219,8 +219,7 @@ app.post('/sacvog', function (req, res) {
         }
       });
     });
-  }else if(si !== 'vacio' && dataExtra === 'vacio'){
-    //Si quiere datos extras
+  }else if(yesOrNot !== 'vacio' && dataExtra === 'vacio'){
     let posicionContexto = 0;
     req.body.queryResult.outputContexts.forEach(function (element, index) {
       if(element.name.includes('pdf')){
@@ -229,18 +228,36 @@ app.post('/sacvog', function (req, res) {
     });
     let doc = req.body.queryResult.outputContexts[posicionContexto].parameters.doc;
     let depto = req.body.queryResult.outputContexts[posicionContexto].parameters.depto;
-    fetchFullTramiteById(doc, function(tramite){
-      var extrasString = "";
-      var extras = {};
-      for(var i in tramite.extras){
-        extrasString+=tramite.extras[i].name+", ";
-        extras[tramite.extras[i].clave] = false;
-      }
-      res.json({
-        fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+'¿Desea agregar alguno?',
-        source: "webhook-echo-sample"
+    if(yesOrNot.includes('si')){
+      fetchFullTramiteById(doc, function(tramite){
+        var extrasString = "";
+        var extras = {};
+        for(var i in tramite.extras){
+          extrasString+=tramite.extras[i].name+", ";
+          extras[tramite.extras[i].clave] = false;
+        }
+        res.json({
+          fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+'¿Desea agregar alguno?',
+          source: "webhook-echo-sample"
+        });
       });
-    });
+    }else{
+      //Dijo que NO
+      res.json({
+        fulfillmentText: "Espere por favor, su trámite se esta generando...",
+        source: "webhook-echo-sample",
+        outputContexts: 
+          [{
+            name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
+            lifespanCount: 10,
+            parameters: {
+                doc:  doc,
+                depto:  depto,
+            },
+            finish: true
+          }]
+      });
+    }
   }else if(dataExtra !== 'vacio'){
     //Vemos que dato extra fue, lo ponemos en tru, y le decimos si quiere otro mas.
     let posicionContexto = 0;
