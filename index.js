@@ -154,15 +154,14 @@ app.post('/sacvog', function (req, res) {
                 source: "webhook-echo-sample",
 		outputContexts: [  
 		    {  
-		      "name":"Irving",
-		      "lifespanCount":5,
-		      "parameters":{  
-			"depto": element.departamento,
-			"doc": element.departamento
+		      name:'Irving',
+		      lifespanCount:5,
+		      parameters:{  
+			depto: element.departamento,
+			doc: element.departamento
 		      }
 		    }
-		  ],
-		followupEventInput: {  }
+		  ]
               });
             }else{
               posiblesDocs+=element.name+" ,";
