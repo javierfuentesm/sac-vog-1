@@ -157,6 +157,7 @@ app.post('/sacvog', function (req, res) {
                 	"parameters": {
 				"doc":  element.id,
 				"depto": element.departamento,
+				}
 			}
                 ]
               });
