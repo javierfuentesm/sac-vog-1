@@ -241,7 +241,7 @@ app.post('/sacvog', function (req, res) {
         source: "webhook-echo-sample"
       });
     });
-  }else if(dataExtra != 'vacio'){
+  }else if(dataExtra !== 'vacio'){
     res.json({
       fulfillmentText: 'Agregando dato extra',
       source: "webhook-echo-sample"
