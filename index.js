@@ -242,9 +242,41 @@ app.post('/sacvog', function (req, res) {
       });
     });
   }else if(dataExtra !== 'vacio'){
-    res.json({
-      fulfillmentText: 'Agregando dato extra',
-      source: "webhook-echo-sample"
+    //Vemos que dato extra fue, lo ponemos en tru, y le decimos si quiere otro mas.
+    let posicionContexto = 0;
+    req.body.queryResult.outputContexts.forEach(function (element, index) {
+      if(element.name.includes('pdf')){
+        posicionContexto = index;
+      }
+    });
+    let doc = req.body.queryResult.outputContexts[posicionContexto].parameters.doc;
+    let depto = req.body.queryResult.outputContexts[posicionContexto].parameters.depto;
+    var extrasLine = req.body.queryResult.outputContexts[posicionContexto].parameters.extras; //Los extras actuales
+    let exist = false;
+    var extrasString = "";
+    fetchFullTramiteById(doc, function(tramite){
+      for(var i in tramite.extras){
+        if(sinDiacriticos(tramite.extras[i].name).toLowerCase().includes(sinDiacriticos(dataExtra).toLowerCase())){
+          exist = true;
+          //Lo pasamos a true, y lo quitamos de los datos extra que puede contener
+          extrasLine[tramite.extras[i].clave] = true;
+        }else{
+          extrasString+=tramite.extras[i].name+", ";
+        }
+      }
+      if(exist == false){
+        res.json({
+          fulfillmentText: 'Ese dato extra no lo puede contener el tramite, los datos extras que puede contener son: '+extrasString+'¿Desea agregar alguno?',
+          source: "webhook-echo-sample"
+        });
+      }else{
+        //Si existio su tramite y se agrego al json
+        res.json({
+          fulfillmentText: 'El dato se agrego con exito, quedan los siguientes datos extras: '+extrasString+'¿Desea agregar alguno?',
+          extras: extrasLine,
+          source: "webhook-echo-sample"
+        });
+      }
     });
   }else{
     res.json({
