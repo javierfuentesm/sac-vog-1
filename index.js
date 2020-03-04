@@ -148,18 +148,8 @@ app.post('/sacvog', function (req, res) {
               //el tramite es exacto
               exacto = true;
               res.json({
-		  fulfillmentText: "Espere por favor, su trámite se esta generando...",
-		  source: "webhook-echo-sample",
-		  outputContexts: [  
-		    {  
-		      "name":"<Context Name>",
-		      "lifespanCount":5,
-		      "parameters":{  
-			"<param name>":"<param value>"
-		      }
-		    }
-		  ],
-		  followupEventInput: {  }
+		"fulfillmentText": "Espere por favor, su trámite se esta generando...",
+                "source": "webhook-echo-sample",
               });
             }else{
               posiblesDocs+=element.name+" ,";
