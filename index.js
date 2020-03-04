@@ -277,18 +277,33 @@ app.post('/sacvog', function (req, res) {
         });
       }else{
         //Si existio su tramite y se agrego al json
-        res.json({
-          fulfillmentText: 'El dato se agrego con exito, quedan los siguientes datos extras: '+extrasString+'¿Desea agregar alguno?',
-          source: "webhook-echo-sample",
-          outputContexts: 
-            [{
-              name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
-              lifespanCount: 10,
-              parameters: {
-                  extras: nuevosExtras
-                }
-            }]
-        });
+        if(extrasString==" "){
+          res.json({
+            fulfillmentText: 'El dato se agrego con exito, espere por favor, su trámite se esta generando...',
+            source: "webhook-echo-sample",
+            outputContexts: 
+              [{
+                name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
+                lifespanCount: 10,
+                parameters: {
+                    extras: nuevosExtras
+                  }
+              }]
+          });
+        }else{
+          res.json({
+            fulfillmentText: 'El dato se agrego con exito, quedan los siguientes datos extras: '+extrasString+'¿Desea agregar alguno?',
+            source: "webhook-echo-sample",
+            outputContexts: 
+              [{
+                name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
+                lifespanCount: 10,
+                parameters: {
+                    extras: nuevosExtras
+                  }
+              }]
+          });
+        }
       }
     });
   }else{
