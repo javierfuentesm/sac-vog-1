@@ -163,9 +163,10 @@ app.post('/sacvog', function (req, res) {
               exacto = true;
               //Ahora verificamos si tiene datos extras
               if(typeof element.extras !== "undefined"){
-                console.log("Tiene datos extras");
+                //Si tiene datos extras, crearemos un json con ellos
+                var extras = {};
                 for(var i in element.extras){
-                  //console.log(element.extras [i].name);
+                  extras[element.extras [i].name] = false;
                 }
                 res.json({
                   fulfillmentText: "Esté documento puede contener datos extras, ¿quiere escucharlos?",
@@ -177,6 +178,7 @@ app.post('/sacvog', function (req, res) {
                       parameters: {
                           doc:  element.id,
                           depto: element.departamento,
+                          extras: extras
                         }
                     }]
                 });
