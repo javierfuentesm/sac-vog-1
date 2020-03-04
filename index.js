@@ -152,7 +152,7 @@ app.post('/sacvog', function (req, res) {
                 "source": "webhook-echo-sample",
 		"outputContexts": [
                 	"parameters": {
-				"name": "projects/sac-vog-cecebh/agent/sessions/123456/contexts/contextName",
+				"name": "projects/sac-vog-cecebh/agent/sessions/123456/contexts/__system_counters__",
 				"lifespanCount": 5,
 		        	"param": "param value"
 			}
