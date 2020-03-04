@@ -154,7 +154,7 @@ app.post('/sacvog', function (req, res) {
                 	"parameters": {
 				"name": "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
 				"lifespanCount": 5,
-		        	"param": "param value"
+		        	"param": "Hola"
 			}
                 ]
               });
