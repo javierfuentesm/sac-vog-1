@@ -149,7 +149,6 @@ app.post('/sacvog', function (req, res) {
               exacto = true;
               res.json({
 		  fulfillmentText: "Espere por favor, su trámite se esta generando...",
-		  fulfillmentMessages: [  ],
 		  source: "webhook-echo-sample",
 		  outputContexts: [  
 		    {  
@@ -160,7 +159,7 @@ app.post('/sacvog', function (req, res) {
 		      }
 		    }
 		  ],
-		  followupEventInput:{  }
+		  followupEventInput: {  }
               });
             }else{
               posiblesDocs+=element.name+" ,";
