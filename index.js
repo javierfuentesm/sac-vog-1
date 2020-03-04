@@ -256,7 +256,7 @@ app.post('/sacvog', function (req, res) {
           }]
         });
       });
-    }else{
+    }else if(yesOrNot.includes('no')){
       //Dijo que NO
       res.json({
         fulfillmentText: "Espere por favor, su trámite se esta generando...",
@@ -272,6 +272,28 @@ app.post('/sacvog', function (req, res) {
                 finish: true
             }
           }]
+      });
+    }else if(yesOrNot.includes('todos')){
+      //Quiere todos los datos
+      fetchFullTramiteById(doc, function(tramite){
+        for(var i in tramite.extras){
+          extras[tramite.extras[i].clave] = true;
+        }
+        res.json({
+          fulfillmentText: 'Espere por favor, su trámite se esta generando...',
+          source: "webhook-echo-sample",
+          outputContexts: 
+          [{
+            name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
+            lifespanCount: 10,
+            parameters: {
+              doc:  doc,
+              depto:  depto,
+              extras: extras,
+              finish: true
+            }
+          }]
+        });
       });
     }
   }else if(dataExtra !== 'vacio'){
