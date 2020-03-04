@@ -220,8 +220,14 @@ app.post('/sacvog', function (req, res) {
     });
   }else if(si !== 'vacio'){
     //Si quiere datos extras
-    let doc = req.body.queryResult.outputContexts[0].parameters.doc;
-    let depto = req.body.queryResult.outputContexts[0].parameters.depto;
+    let posicionContexto = 0;
+    req.body.queryResult.outputContexts.forEach(function (element, index) {
+      if(element.name.includes('pdf')){
+        posicionContexto = index;
+      }
+    });
+    let doc = req.body.queryResult.outputContexts[posicionContexto].parameters.doc;
+    let depto = req.body.queryResult.outputContexts[posicionContexto].parameters.depto;
     fetchFullTramiteById(doc, function(tramite){
       var extrasString = "";
       var extras = {};
@@ -230,7 +236,7 @@ app.post('/sacvog', function (req, res) {
         extras[tramite.extras[i].clave] = false;
       }
       res.json({
-        fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+'¿Cuáles desea agregar?',
+        fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+'¿Desea agregar alguno?',
         tramite: tramite,
         extras: extras,
         source: "webhook-echo-sample"
