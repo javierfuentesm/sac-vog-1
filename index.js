@@ -147,20 +147,40 @@ app.post('/sacvog', function (req, res) {
             if(name == document){
               //el tramite es exacto
               exacto = true;
-              res.json({
-		"fulfillmentText": "Espere por favor, su trámite se esta generando...",
-                "source": "webhook-echo-sample",
-		"outputContexts": [
-			{
-			"name": "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
-			"lifespanCount": 5,
-                	"parameters": {
-				"doc":  element.id,
-				"depto": element.departamento,
-				}
-			}
-                ]
-              });
+              //Ahora verificamos si tiene datos extras
+              if(typeof element.extras !== "undefined"){
+                console.log("Tiene datos extras");
+                for(var i in element.extras){
+                  //console.log(element.extras [i].name);
+                }
+                res.json({
+                  fulfillmentText: "Esté documento puede contener datos extras, ¿quiere escucharlos?",
+                  source: "webhook-echo-sample",
+                  outputContexts: 
+                    [{
+                      name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
+                      lifespanCount: 5,
+                      parameters: {
+                          doc:  element.id,
+                          depto: element.departamento,
+                        }
+                    }]
+                });
+              }else{
+                res.json({
+                  fulfillmentText: "Espere por favor, su trámite se esta generando...",
+                  source: "webhook-echo-sample",
+                  outputContexts: 
+                    [{
+                      name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
+                      lifespanCount: 5,
+                      parameters: {
+                          doc:  element.id,
+                          depto: element.departamento,
+                        }
+                    }]
+                });
+              }
             }else{
               posiblesDocs+=element.name+" ,";
             }
