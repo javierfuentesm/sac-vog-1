@@ -151,10 +151,11 @@ app.post('/sacvog', function (req, res) {
 		"fulfillmentText": "Espere por favor, su trámite se esta generando...",
                 "source": "webhook-echo-sample",
 		"outputContexts": [
-			"name": "projects/sac-vog-cecebh/agent/sessions/123456/contexts/contextName",
+			"name": "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
 			"lifespanCount": 5,
                 	"parameters": {
-		        	"param": "Hola"
+				"doc": element.id,
+		        	"depto": element.departamento,
 			}
                 ]
               });
