@@ -106,6 +106,7 @@ app.post('/sacvog', function (req, res) {
   let dep = req.body.queryResult.parameters.depto || 'vacio';         //departamento
   let doc = req.body.queryResult.parameters.documento || 'vacio';     //documento que necesita
   let si = req.body.queryResult.queryText || 'vacio';                 //Responde si al hecho de datos extras
+  let dataExtra = req.body.queryResult.parameters.datosextras || 'vacio';
   
   //let deptos = req.headers.deptos || 'vacio';
   //let tram = req.headers.tram || 'vacio';
@@ -237,10 +238,13 @@ app.post('/sacvog', function (req, res) {
       }
       res.json({
         fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+'¿Desea agregar alguno?',
-        tramite: tramite,
-        extras: extras,
         source: "webhook-echo-sample"
       });
+    });
+  }else if(dataExtra != 'vacio'){
+    res.json({
+      fulfillmentText: 'Agregando dato extra',
+      source: "webhook-echo-sample"
     });
   }else{
     res.json({
