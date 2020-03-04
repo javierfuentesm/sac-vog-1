@@ -225,8 +225,6 @@ app.post('/sacvog', function (req, res) {
     fetchFullTramiteById(doc, function(tramite){
       res.json({
         fulfillmentText: 'Enlistando datos extras',
-        docu: doc,
-        depato: depto,
         source: "webhook-echo-sample"
       });
     });
