@@ -84,13 +84,11 @@ function fetchFullTramiteById(idTramite, resultado){
   fetchAllTramites(function(result){
     let arrayKeys = Object.keys(result);
     let arrayFull = Object.values(result);
-    let arrayResult = [{}];
     let tramite = {};
     arrayFull.forEach(function (element, index) {
       arrayFull[index].id = arrayKeys[index];
-      arrayResult = arrayFull;
-      if(arrayResult[i].id == idTramite){
-        tramite = arrayResult[i];
+      if(arrayFull[index].id == idTramite){
+        tramite = arrayFull[index];
       }
     });
     resultado(tramite);
