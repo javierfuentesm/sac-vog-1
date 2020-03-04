@@ -228,7 +228,9 @@ app.post('/sacvog', function (req, res) {
     });
     let doc = req.body.queryResult.outputContexts[posicionContexto].parameters.doc;
     let depto = req.body.queryResult.outputContexts[posicionContexto].parameters.depto;
+    var extrasLine = req.body.queryResult.outputContexts[posicionContexto].parameters.extras;
     if(yesOrNot.includes('si')){
+      //Dijo que SI
       fetchFullTramiteById(doc, function(tramite){
         var extrasString = "";
         var extras = {};
@@ -254,6 +256,7 @@ app.post('/sacvog', function (req, res) {
                 doc:  doc,
                 depto:  depto,
             },
+            extras: extrasLine,
             finish: true
           }]
       });
