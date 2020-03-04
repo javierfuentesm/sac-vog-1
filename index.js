@@ -154,8 +154,7 @@ app.post('/sacvog', function (req, res) {
 			"name": "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
 			"lifespanCount": 5,
                 	"parameters": {
-				"doc": element.id,
-		        	"depto": element.departamento,
+				"doc": "prueba"
 			}
                 ]
               });
