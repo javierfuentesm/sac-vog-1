@@ -275,8 +275,15 @@ app.post('/sacvog', function (req, res) {
         //Si existio su tramite y se agrego al json
         res.json({
           fulfillmentText: 'El dato se agrego con exito, quedan los siguientes datos extras: '+extrasString+'¿Desea agregar alguno?',
-          extras: nuevosExtras,
-          source: "webhook-echo-sample"
+          source: "webhook-echo-sample",
+          outputContexts: 
+            [{
+              name: "projects/sac-vog-cecebh/agent/sessions/123456/contexts/pdf",
+              lifespanCount: 5,
+              parameters: {
+                  extras: nuevosExtras
+                }
+            }]
         });
       }
     });
