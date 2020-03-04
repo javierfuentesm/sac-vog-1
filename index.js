@@ -148,7 +148,7 @@ app.post('/sacvog', function (req, res) {
               //el tramite es exacto
               exacto = true;
               res.json({
-                {  
+                
 		  "fulfillmentText":"Espere por favor, su trámite se esta generando...",
 		  "fulfillmentMessages":[  ],
 		  "source":"example.com",
@@ -167,7 +167,7 @@ app.post('/sacvog', function (req, res) {
 		    }
 		  ],
 		  "followupEventInput":{  }
-		}
+		
               });
             }else{
               posiblesDocs+=element.name+" ,";
