@@ -169,6 +169,12 @@ app.post('/sacvog', function (req, res) {
                 for(var i in element.extras){
                   extras[element.extras[i].clave] = false;
                 }
+                var ex = [];
+                for(var key in extras) {
+                  if(extras[key] === false){
+                    ex.push(key);
+                  }
+                }
                 res.json({
                   fulfillmentText: "Esté documento puede contener datos extras, ¿quiere escucharlos?",
                   source: "webhook-echo-sample",
@@ -180,6 +186,7 @@ app.post('/sacvog', function (req, res) {
                         doc:  element.id,
                         depto: element.departamento,
                         extras: extras,
+                        arregloKeysFalse: ex,
                         finish: false
                       }                      
                     }]
