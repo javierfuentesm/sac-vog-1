@@ -247,6 +247,12 @@ app.post('/sacvog', function (req, res) {
           extrasString+=tramite.extras[i].name+", ";
           extras[tramite.extras[i].clave] = false;
         }
+        var ex = [];
+        for(var key in extrasLine) {
+          if(extrasLine[key] === false){
+            ex.push(key);
+          }
+        }
         res.json({
           fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+'¿Desea agregar alguno?',
           source: "webhook-echo-sample",
@@ -258,6 +264,7 @@ app.post('/sacvog', function (req, res) {
               doc:  doc,
               depto:  depto,
               extras: extrasLine,
+              arregloKeysFalse: ex,
               finish: false
             }
           }]
@@ -265,6 +272,12 @@ app.post('/sacvog', function (req, res) {
       });
     }else if(yesOrNot.includes('no')){
       //Dijo que NO
+      var ex = [];
+      for(var key in extrasLine) {
+        if(extrasLine[key] === false){
+          ex.push(key);
+        }
+      }
       res.json({
         fulfillmentText: "Espere por favor, su trámite se esta generando...",
         source: "webhook-echo-sample",
@@ -276,6 +289,7 @@ app.post('/sacvog', function (req, res) {
                 doc:  doc,
                 depto:  depto,
                 extras: extrasLine,
+                arregloKeysFalse: ex,
                 finish: true
             }
           }]
@@ -286,6 +300,12 @@ app.post('/sacvog', function (req, res) {
         var extras = {};
         for(var i in tramite.extras){
           extras[tramite.extras[i].clave] = true;
+        }
+        var ex = [];
+        for(var key in extras) {
+          if(extras[key] === false){
+            ex.push(key);
+          }
         }
         res.json({
           fulfillmentText: 'Espere por favor, su trámite se esta generando...',
@@ -298,6 +318,7 @@ app.post('/sacvog', function (req, res) {
               doc:  doc,
               depto:  depto,
               extras: extras,
+              arregloKeysFalse: ex,
               finish: true
             }
           }]
@@ -334,6 +355,12 @@ app.post('/sacvog', function (req, res) {
         }
       }
       if(exist == false){
+        var ex = [];
+        for(var key in nuevosExtras) {
+          if(nuevosExtras[key] === false){
+            ex.push(key);
+          }
+        }
         res.json({
           fulfillmentText: 'Ese dato extra no lo puede contener el tramite, los datos extras que puede contener son: '+extrasString+'¿Desea agregar alguno?',
           source: "webhook-echo-sample",
@@ -345,6 +372,7 @@ app.post('/sacvog', function (req, res) {
                 doc:  doc,
                 depto:  depto,
                 extras: nuevosExtras,
+                arregloKeysFalse: ex,
                 finish: false
               }
             }]
@@ -352,6 +380,12 @@ app.post('/sacvog', function (req, res) {
       }else{
         //Si existio su tramite y se agrego al json
         if(extrasString==" "){
+          var ex = [];
+          for(var key in nuevosExtras) {
+            if(nuevosExtras[key] === false){
+              ex.push(key);
+            }
+          }
           res.json({
             fulfillmentText: 'El dato se agrego con exito, espere por favor, su trámite se esta generando...',
             source: "webhook-echo-sample",
@@ -363,11 +397,18 @@ app.post('/sacvog', function (req, res) {
                   doc:  doc,
                   depto:  depto,
                   extras: nuevosExtras,
+                  arregloKeysFalse: ex,
                   finish: false
                 }
               }]
           });
         }else{
+          var ex = [];
+          for(var key in nuevosExtras) {
+            if(nuevosExtras[key] === false){
+              ex.push(key);
+            }
+          }
           res.json({
             fulfillmentText: 'El dato se agrego con exito, quedan los siguientes datos extras: '+extrasString+'¿Desea agregar alguno?',
             source: "webhook-echo-sample",
@@ -379,6 +420,7 @@ app.post('/sacvog', function (req, res) {
                   doc:  doc,
                   depto:  depto,
                   extras: nuevosExtras,
+                  arregloKeysFalse: ex,
                   finish: false
                 }
               }]
