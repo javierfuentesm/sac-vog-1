@@ -176,7 +176,7 @@ app.post('/sacvog', function (req, res) {
                   }
                 }
                 res.json({
-                  fulfillmentText: "Esté documento puede contener datos extras, ¿quiere escucharlos?",
+                  fulfillmentText: "Éste documento puede contener datos extras. ¿Quiere escucharlos?",
                   source: "webhook-echo-sample",
                   outputContexts: 
                     [{
@@ -193,7 +193,7 @@ app.post('/sacvog', function (req, res) {
                 });
               }else{
                 res.json({
-                  fulfillmentText: "Espere por favor, su trámite se esta generando...",
+                  fulfillmentText: "Su trámite ya está generado. Descárgalo, visualízalo y confirme si es el correcto.",
                   source: "webhook-echo-sample",
                   outputContexts: 
                     [{
@@ -222,7 +222,7 @@ app.post('/sacvog', function (req, res) {
         }else if(ok == true && exacto == false){
           //Se cumplio, pero el doc no fue exacto, regresara los posibles documentos que hay
           res.json({
-            fulfillmentText: 'El departamento de: '+dep+' emite éstos documentos parecidos con el que ústed ésta buscando: ' +posiblesDocs,
+            fulfillmentText: 'El departamento de: '+dep+' emite éstos trámites parecidos al qué usted está buscando: ' +posiblesDocs,
             source: "webhook-echo-sample"
           });
         }
@@ -254,7 +254,7 @@ app.post('/sacvog', function (req, res) {
           }
         }
         res.json({
-          fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+'¿Desea agregar alguno?',
+          fulfillmentText: 'Los datos extras que puede contener son: '+extrasString+'. ¿Desea agregar alguno?',
           source: "webhook-echo-sample",
           outputContexts: 
           [{
@@ -279,7 +279,7 @@ app.post('/sacvog', function (req, res) {
         }
       }
       res.json({
-        fulfillmentText: "Espere por favor, su trámite se esta generando...",
+        fulfillmentText: "Su trámite ya está generado. Descárgalo, visualízalo y confirme si es el correcto.",
         source: "webhook-echo-sample",
         outputContexts: 
           [{
@@ -308,7 +308,7 @@ app.post('/sacvog', function (req, res) {
           }
         }
         res.json({
-          fulfillmentText: 'Espere por favor, su trámite se esta generando...',
+          fulfillmentText: 'Su trámite ya está generado. Descárgalo, visualízalo y confirme si es el correcto.',
           source: "webhook-echo-sample",
           outputContexts: 
           [{
@@ -362,7 +362,7 @@ app.post('/sacvog', function (req, res) {
           }
         }
         res.json({
-          fulfillmentText: 'Ese dato extra no lo puede contener el tramite, los datos extras que puede contener son: '+extrasString+'¿Desea agregar alguno?',
+          fulfillmentText: 'Ese dato extra no lo puede contener el trámite. Los datos extras que puede contener son. '+extrasString+'. ¿Desea agregar alguno?',
           source: "webhook-echo-sample",
           outputContexts: 
             [{
@@ -387,7 +387,7 @@ app.post('/sacvog', function (req, res) {
             }
           }
           res.json({
-            fulfillmentText: 'El dato se agrego con exito, espere por favor, su trámite se esta generando...',
+            fulfillmentText: 'El dato se agrego con exito, Su trámite ya está generado. Descárgalo, visualízalo y confirme si es el correcto.',
             source: "webhook-echo-sample",
             outputContexts: 
               [{
@@ -410,7 +410,7 @@ app.post('/sacvog', function (req, res) {
             }
           }
           res.json({
-            fulfillmentText: 'El dato se agrego con exito, quedan los siguientes datos extras: '+extrasString+'¿Desea agregar alguno?',
+            fulfillmentText: 'El dato se agregó con éxito, quedan los siguientes datos extras: '+extrasString+'. ¿Desea agregar alguno?',
             source: "webhook-echo-sample",
             outputContexts: 
               [{
@@ -430,7 +430,7 @@ app.post('/sacvog', function (req, res) {
     });
   }else{
     res.json({
-      fulfillmentText: 'Lo siento, no entendí lo que solicitaste, ¿Podrías repetirlo?',
+      fulfillmentText: 'Lo siento, no entendí lo que solicitaste. ¿Podrías repetirlo?',
       source: "webhook-echo-sample"
     });
   }
